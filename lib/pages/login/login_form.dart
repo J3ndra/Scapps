@@ -73,7 +73,7 @@ class LoginForm extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      flex: 2,
+                      flex: 1,
                       child: Container(
                         margin: const EdgeInsets.symmetric(horizontal: 30),
                         child: Column(
