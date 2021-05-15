@@ -9,7 +9,16 @@ class AppStarted extends AuthEvent {}
 
 class AuthCheck extends AuthEvent {}
 
-class AuthExpired extends AuthEvent {}
+class GetToken extends AuthEvent {
+  final String token;
+
+  GetToken(this.token);
+
+  @override
+  List<Object> get props => [token];
+}
+
+class AuthIsExpired extends AuthEvent {}
 
 class LoggedOut extends AuthEvent {}
 

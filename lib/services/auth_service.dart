@@ -27,7 +27,7 @@ class AuthService {
     final logoutUrl = '$baseUrl/api/v1/student/authentication/logout';
 
     try {
-      var response = await http.post(Uri.parse(logoutUrl), headers: {
+      var response = await http.get(Uri.parse(logoutUrl), headers: {
         'Authorization': 'Bearer $token',
         'Accept': 'application/json'
       });
@@ -57,7 +57,8 @@ class AuthService {
   Future unsetLocalToken() async {
     Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
     final SharedPreferences local = await _prefs;
-    local.setString("token", null);
+    local.clear();
+    print("Cleared!");
   }
 
   // Force logout when token expired

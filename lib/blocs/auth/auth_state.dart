@@ -19,6 +19,8 @@ class AuthHasToken extends AuthState {
   List<Object> get props => [token];
 }
 
+class AuthExpired extends AuthState {}
+
 class AuthFailed extends AuthState {}
 
 class AuthData extends AuthState {

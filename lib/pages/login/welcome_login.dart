@@ -58,6 +58,7 @@ class WelcomeLoginPage extends StatelessWidget {
           }
           if (state is AuthHasToken || state is AuthData)
             return HomePage(authBloc: authBloc);
+          if (state is AuthExpired) return LoginPage(authBloc: authBloc);
           if (state is AuthFailed || state is LoginFailed)
             return LoginPage(authBloc: authBloc);
           if (state is AuthLoading)
@@ -89,7 +90,6 @@ class WelcomeLoginPage extends StatelessWidget {
                                 Container(
                                   width: 150,
                                   height: 150,
-                                  // child: Image.asset("assets/images/logo.svg"),
                                   child: SvgPicture.asset(
                                       "assets/images/logo.svg"),
                                 ),

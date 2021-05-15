@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:scapps_student/blocs/auth/auth_bloc.dart';
+import 'package:scapps_student/blocs/auth/auth_event.dart';
+import 'package:scapps_student/blocs/auth/auth_state.dart';
 import 'package:scapps_student/services/auth_service.dart';
 import 'package:scapps_student/utils/theme.dart';
+import 'package:scapps_student/widgets/primary_button.dart';
 
 class HomePage extends StatefulWidget {
   final AuthBloc authBloc;
@@ -14,41 +20,59 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final AuthService authService = AuthService();
+  AuthBloc get _authBloc => widget.authBloc;
+
+  DateTime currentBackPressTime;
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
-
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          child: Column(
-            children: <Widget>[
-              Container(
-                height: height * 0.2,
-                width: width,
-                decoration: BoxDecoration(
-                  color: Color(0xFF333333),
-                ),
-              ),
-              Positioned(
-                bottom: 40,
-                right: 20,
-                child: RichText(
-                    text: TextSpan(
-                        text: "Selamat Pagi,\n",
-                        style: textNormal.copyWith(color: Color(0xFFF3F3F3)),
-                        children: [
-                      TextSpan(
-                          text: "Junianto",
-                          style: textNormal.copyWith(color: Colors.white))
-                    ])),
-              )
-            ],
-          ),
-        ),
-      ),
+      body: BlocBuilder(
+          bloc: _authBloc,
+          // ignore: missing_return
+          builder: (context, state) {
+            if (state is AuthHasToken) {
+              bool expiredToken = JwtDecoder.isExpired(state.token);
+              print(expiredToken.toString());
+              return WillPopScope(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          "Token : " + state.token,
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        Text(
+                          "Email : ",
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        RaisedButton(
+                          onPressed: () {
+                            _authBloc.add(LoggedOut());
+                          },
+                          child: Text("Logout"),
+                        )
+                      ],
+                    ),
+                  ),
+                  onWillPop: onWillPop);
+            }
+          }),
     );
+  }
+
+  Future<bool> onWillPop() {
+    DateTime now = DateTime.now();
+    if (currentBackPressTime == null ||
+        now.difference(currentBackPressTime) > Duration(seconds: 2)) {
+      currentBackPressTime = now;
+      Fluttertoast.showToast(
+          msg: "Tekan sekali lagi untuk keluar dari aplikasi.");
+      return Future.value(false);
+    }
+    return Future.value(true);
   }
 }

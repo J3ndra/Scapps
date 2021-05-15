@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:scapps_student/blocs/auth/auth_event.dart';
 import 'package:scapps_student/blocs/auth/auth_state.dart';
 import 'package:scapps_student/models/logout_model.dart';
@@ -19,7 +19,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
       final hasToken = await authService.hasToken();
       if (hasToken != null) {
-        yield AuthHasToken(token: hasToken);
+        final bool tokenExpired = JwtDecoder.isExpired(hasToken);
+        if (tokenExpired != false) {
+          await authService.unsetLocalToken();
+          yield AuthExpired();
+        } else {
+          yield AuthHasToken(token: hasToken);
+        }
       } else {
         yield AuthFailed();
       }
@@ -41,17 +47,26 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       }
     }
 
-    if (event is AuthExpired) {
-      await authService.unsetLocalToken();
-      yield AuthFailed();
+    if (event is AuthIsExpired) {
+      final String token = await authService.hasToken();
+      try {
+        final bool tokenExpired = JwtDecoder.isExpired(token);
+
+        if (tokenExpired != false) {
+          await authService.unsetLocalToken();
+          yield AuthFailed();
+        }
+      } catch (e) {}
     }
 
     if (event is LoggedOut) {
       final String token = await authService.hasToken();
+      // print(token);
 
       try {
         final LogoutModel logout = await authService.logoutStudent(token);
-        if (logout.meta.success == true) {
+        if (logout.meta.success != false || logout.meta.success != true) {
+          print("message = " + logout.meta.message);
           await authService.unsetLocalToken();
           yield AuthFailed();
         }
