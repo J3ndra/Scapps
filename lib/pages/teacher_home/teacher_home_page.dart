@@ -41,6 +41,7 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
+                        Text("Halaman Guru"),
                         Text(
                           "Token : " + state.token,
                           style: TextStyle(fontSize: 18),
