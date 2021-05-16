@@ -4,8 +4,8 @@ import 'package:scapps_student/blocs/auth/auth_bloc.dart';
 import 'package:scapps_student/pages/login/login_page.dart';
 import 'package:scapps_student/pages/login/welcome_login.dart';
 import 'package:scapps_student/pages/splash/splash_page.dart';
-import 'package:scapps_student/pages/student_home/student_home_page.dart';
-import 'package:scapps_student/pages/teacher_home/teacher_home_page.dart';
+import 'package:scapps_student/pages/student/student_home_page.dart';
+import 'package:scapps_student/pages/teacher/teacher_home_page.dart';
 import 'package:scapps_student/services/auth_service.dart';
 
 var routes = <String, WidgetBuilder>{

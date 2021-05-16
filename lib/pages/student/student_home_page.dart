@@ -32,8 +32,6 @@ class _StudentHomePageState extends State<StudentHomePage> {
           // ignore: missing_return
           builder: (context, state) {
             if (state is AuthStudentHasToken) {
-              bool expiredToken = JwtDecoder.isExpired(state.token);
-              print(expiredToken.toString());
               return WillPopScope(
                   child: Container(
                     width: MediaQuery.of(context).size.width,
