@@ -9,16 +9,16 @@ import 'package:scapps_student/services/auth_service.dart';
 import 'package:scapps_student/utils/theme.dart';
 import 'package:scapps_student/widgets/primary_button.dart';
 
-class HomePage extends StatefulWidget {
+class StudentHomePage extends StatefulWidget {
   final AuthBloc authBloc;
 
-  HomePage({Key key, this.authBloc}) : super(key: key);
+  StudentHomePage({Key key, this.authBloc}) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _StudentHomePageState createState() => _StudentHomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _StudentHomePageState extends State<StudentHomePage> {
   final AuthService authService = AuthService();
   AuthBloc get _authBloc => widget.authBloc;
 
@@ -31,7 +31,7 @@ class _HomePageState extends State<HomePage> {
           bloc: _authBloc,
           // ignore: missing_return
           builder: (context, state) {
-            if (state is AuthHasToken) {
+            if (state is AuthStudentHasToken) {
               bool expiredToken = JwtDecoder.isExpired(state.token);
               print(expiredToken.toString());
               return WillPopScope(

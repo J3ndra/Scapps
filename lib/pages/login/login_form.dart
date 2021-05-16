@@ -78,6 +78,11 @@ class LoginForm extends StatelessWidget {
                                       ? Text("Sesi login Anda telah selesai!",
                                           style: textNormal.copyWith(
                                               color: Color(0xFFCF4545)))
+                                      : Text(""),
+                                  (state is AuthRoleNotFound)
+                                      ? Text("Role tidak ditemukan!",
+                                          style: textNormal.copyWith(
+                                              color: Color(0xFFCF4545)))
                                       : Text("")
                                 ],
                               ),
@@ -143,6 +148,10 @@ class LoginForm extends StatelessWidget {
   }
 
   void _loginAttempt() {
+    print("Email = " +
+        emailController.text +
+        "\nPassword = " +
+        passwordController.text);
     authBloc.add(LoginProcess(
         email: emailController.text, password: passwordController.text));
   }

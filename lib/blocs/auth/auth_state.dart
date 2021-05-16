@@ -11,13 +11,31 @@ class AuthInit extends AuthState {}
 
 class AuthLoading extends AuthState {}
 
-class AuthHasToken extends AuthState {
+class AuthStudentHasToken extends AuthState {
   final String token;
-  AuthHasToken({this.token});
+  AuthStudentHasToken({this.token});
 
   @override
   List<Object> get props => [token];
 }
+
+class AuthTeacherHasToken extends AuthState {
+  final String token;
+  AuthTeacherHasToken({this.token});
+
+  @override
+  List<Object> get props => [token];
+}
+
+class AuthRoleNotFound extends AuthState {}
+
+// class AuthHasRole extends AuthState {
+//   final String role;
+//   AuthHasRole({this.role});
+
+//   @override
+//   List<Object> get props => [role];
+// }
 
 class AuthExpired extends AuthState {}
 

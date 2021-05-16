@@ -9,7 +9,7 @@ String baseUrl = 'https://scapp-dev.koding.co.id';
 class AuthService {
   // Login
   Future loginStudent(String _email, String _password) async {
-    final loginUrl = "$baseUrl/api/v1/student/authentication/login";
+    final loginUrl = "$baseUrl/api/v1/mobile/authentication/login";
 
     try {
       var response = await http.post(Uri.parse(loginUrl),
@@ -24,7 +24,7 @@ class AuthService {
 
   // Logout
   Future logoutStudent(String token) async {
-    final logoutUrl = '$baseUrl/api/v1/student/authentication/logout';
+    final logoutUrl = '$baseUrl/api/v1/mobile/authentication/logout';
 
     try {
       var response = await http.get(Uri.parse(logoutUrl), headers: {
@@ -39,7 +39,7 @@ class AuthService {
     }
   }
 
-  // Save the token using SharedPreference
+  // Check Token
   Future hasToken() async {
     Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
     final SharedPreferences local = await _prefs;
@@ -48,13 +48,24 @@ class AuthService {
     return null;
   }
 
-  Future setLocalToken(String token) async {
+  // Check Role
+  Future hasRole() async {
+    Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+    final SharedPreferences local = await _prefs;
+    final String role = local.getString("role") ?? null;
+    if (role != null) return role;
+    return null;
+  }
+
+  // Save the token and role using SharedPreference
+  Future setLocalTokenAndRole(String token, String role) async {
     Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
     final SharedPreferences local = await _prefs;
     local.setString("token", token);
+    local.setString("role", role);
   }
 
-  Future unsetLocalToken() async {
+  Future unsetAll() async {
     Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
     final SharedPreferences local = await _prefs;
     local.clear();
