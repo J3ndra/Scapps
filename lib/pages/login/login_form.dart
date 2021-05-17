@@ -18,6 +18,7 @@ class LoginForm extends StatelessWidget {
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  ValueChanged<String> onChanged;
 
   DateTime currentBackPressTime;
 
@@ -28,6 +29,7 @@ class LoginForm extends StatelessWidget {
       builder: (context, state) {
         return WillPopScope(
             child: Scaffold(
+                backgroundColor: Colors.white,
                 resizeToAvoidBottomInset: false,
                 body: SafeArea(
                   child: Stack(
@@ -43,12 +45,12 @@ class LoginForm extends StatelessWidget {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+                                  SizedBox(
+                                    height: 30.0,
+                                  ),
                                   Text(
                                     "Selamat Datang",
                                     style: textTitle,
-                                  ),
-                                  SizedBox(
-                                    height: 10.0,
                                   ),
                                   Text(
                                     "Silahkan masuk untuk melanjutkan",
@@ -58,14 +60,67 @@ class LoginForm extends StatelessWidget {
                                   SizedBox(
                                     height: 30.0,
                                   ),
-                                  EmailField(
-                                    emailController: emailController,
-                                    hintText: "Surel",
-                                    onChanged: (value) {},
+                                  TextField(
+                                      style: textNormal.copyWith(
+                                          color: Color(0xff808080)),
+                                      controller: emailController,
+                                      onChanged: onChanged,
+                                      cursorColor: Colors.black,
+                                      decoration: InputDecoration(
+                                        contentPadding: EdgeInsets.only(
+                                            top: 20, bottom: 20, right: 20),
+                                        filled: true,
+                                        fillColor: Colors.grey[200],
+                                        border: new OutlineInputBorder(
+                                          borderSide: BorderSide.none,
+                                          borderRadius: const BorderRadius.all(
+                                            const Radius.circular(8.0),
+                                          ),
+                                        ),
+                                        prefixIcon: Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 20, right: 10),
+                                          child: Icon(
+                                            Icons.mail,
+                                            color: Color(0xFF808080),
+                                          ),
+                                        ),
+                                        hintText: "Alamat Surel",
+                                      )),
+                                  SizedBox(
+                                    height: 16.0,
                                   ),
-                                  PasswordField(
-                                    passwordController: passwordController,
-                                    onChanged: (value) {},
+                                  TextField(
+                                    style: textNormal.copyWith(
+                                        color: Color(0xff808080)),
+                                    controller: passwordController,
+                                    obscureText: true,
+                                    onChanged: onChanged,
+                                    cursorColor: Colors.black,
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.only(
+                                          top: 20, bottom: 20, right: 20),
+                                      border: new OutlineInputBorder(
+                                        borderSide: BorderSide.none,
+                                        borderRadius: const BorderRadius.all(
+                                          const Radius.circular(8.0),
+                                        ),
+                                      ),
+                                      filled: true,
+                                      fillColor: Colors.grey[200],
+                                      hintText: "Kata Sandi",
+                                      prefixIcon: Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 20, right: 10),
+                                        child: Icon(
+                                          Icons.lock,
+                                          color: Color(0xFF808080),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 16.0,
                                   ),
                                   (state is LoginFailed)
                                       ? Text(
@@ -85,8 +140,6 @@ class LoginForm extends StatelessWidget {
                             Expanded(
                               flex: 1,
                               child: Container(
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 30),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: <Widget>[
@@ -102,13 +155,14 @@ class LoginForm extends StatelessWidget {
                                     RichText(
                                       textAlign: TextAlign.center,
                                       text: TextSpan(
-                                        style: textNormal,
+                                        style: textNormal.copyWith(
+                                            color: Color(0xFF808080)),
                                         children: <TextSpan>[
                                           TextSpan(
                                               text:
-                                                  "'By continuing with the services above, you agree to Asep's"),
+                                                  "By continuing with the services above, you agree to Asep's"),
                                           TextSpan(
-                                              text: 'Terms of Service',
+                                              text: ' Terms of Service',
                                               style: textLink,
                                               recognizer: TapGestureRecognizer()
                                                 ..onTap = () {
@@ -143,6 +197,10 @@ class LoginForm extends StatelessWidget {
   }
 
   void _loginAttempt() {
+    // print("Email = " +
+    //     emailController.text +
+    //     "\nPassword = " +
+    //     passwordController.text);
     authBloc.add(LoginProcess(
         email: emailController.text, password: passwordController.text));
   }

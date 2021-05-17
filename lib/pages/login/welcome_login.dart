@@ -4,8 +4,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:scapps_student/blocs/auth/auth_bloc.dart';
 import 'package:scapps_student/blocs/auth/auth_event.dart';
 import 'package:scapps_student/blocs/auth/auth_state.dart';
-import 'package:scapps_student/pages/home/home_page.dart';
 import 'package:scapps_student/pages/login/login_page.dart';
+import 'package:scapps_student/pages/student/student_home_page.dart';
+import 'package:scapps_student/pages/teacher/teacher_home_page.dart';
 import 'package:scapps_student/services/auth_service.dart';
 // import 'package:scapps_student/utils/navigator_helper.dart';
 import 'package:scapps_student/utils/theme.dart';
@@ -56,8 +57,12 @@ class WelcomeLoginPage extends StatelessWidget {
               ),
             );
           }
-          if (state is AuthHasToken || state is AuthData)
-            return HomePage(authBloc: authBloc);
+          // if (state is AuthHasToken || state is AuthData)
+          //   return HomePage(authBloc: authBloc);
+          if (state is AuthStudentHasToken)
+            return StudentHomePage(authBloc: authBloc);
+          if (state is AuthTeacherHasToken)
+            return TeacherHomePage(authBloc: authBloc);
           if (state is AuthExpired) return LoginPage(authBloc: authBloc);
           if (state is AuthFailed || state is LoginFailed)
             return LoginPage(authBloc: authBloc);

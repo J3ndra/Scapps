@@ -18,13 +18,24 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       yield AuthLoading();
 
       final hasToken = await authService.hasToken();
+      final hasRole = await authService.hasRole();
       if (hasToken != null) {
         final bool tokenExpired = JwtDecoder.isExpired(hasToken);
+        print("Token = " + hasToken + "\n Role = " + hasRole);
         if (tokenExpired != false) {
-          await authService.unsetLocalToken();
+          await authService.unsetAll();
           yield AuthExpired();
         } else {
-          yield AuthHasToken(token: hasToken);
+          // yield AuthHasToken(token: hasToken);
+          if (hasRole != null) {
+            if (hasRole == "teacher") {
+              yield AuthTeacherHasToken(token: hasToken);
+            } else if (hasRole == "student") {
+              yield AuthStudentHasToken(token: hasToken);
+            } else {
+              AuthRoleNotFound();
+            }
+          }
         }
       } else {
         yield AuthFailed();
@@ -39,8 +50,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             await authService.loginStudent(event.email, event.password);
         if (login.meta.success != false) {
           yield LoginSuccess();
-          await authService.setLocalToken(login.token);
-          yield AuthHasToken(token: login.token);
+          await authService.setLocalTokenAndRole(login.token, login.data.role);
+          print("Role = " + login.data.role);
+          // yield AuthHasToken(token: login.token);
+          if (login.data.role == "student") {
+            yield AuthStudentHasToken(token: login.token);
+          } else if (login.data.role == "teacher") {
+            yield AuthTeacherHasToken(token: login.token);
+          } else {
+            yield AuthRoleNotFound();
+          }
         }
       } catch (e) {
         yield LoginFailed("Login Failed!");
@@ -53,7 +72,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         final bool tokenExpired = JwtDecoder.isExpired(token);
 
         if (tokenExpired != false) {
-          await authService.unsetLocalToken();
+          await authService.unsetAll();
           yield AuthFailed();
         }
       } catch (e) {}
@@ -67,7 +86,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         final LogoutModel logout = await authService.logoutStudent(token);
         if (logout.meta.success != false || logout.meta.success != true) {
           print("message = " + logout.meta.message);
-          await authService.unsetLocalToken();
+          await authService.unsetAll();
           yield AuthFailed();
         }
       } catch (e) {}
