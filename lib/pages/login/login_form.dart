@@ -7,8 +7,6 @@ import 'package:scapps_student/blocs/auth/auth_event.dart';
 import 'package:scapps_student/blocs/auth/auth_state.dart';
 import 'package:scapps_student/utils/theme.dart';
 import 'package:scapps_student/widgets/primary_button.dart';
-import 'package:scapps_student/widgets/email_field.dart';
-import 'package:scapps_student/widgets/password_field.dart';
 
 // ignore: must_be_immutable
 class LoginForm extends StatelessWidget {

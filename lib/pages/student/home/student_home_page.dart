@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:scapps_student/blocs/auth/auth_bloc.dart';
 import 'package:scapps_student/blocs/auth/auth_event.dart';
 import 'package:scapps_student/blocs/auth/auth_state.dart';
