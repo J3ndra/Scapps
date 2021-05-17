@@ -42,14 +42,6 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Text("Halaman Guru"),
-                        Text(
-                          "Token : " + state.token,
-                          style: TextStyle(fontSize: 18),
-                        ),
-                        Text(
-                          "Email : ",
-                          style: TextStyle(fontSize: 18),
-                        ),
                         RaisedButton(
                           onPressed: () {
                             _authBloc.add(LoggedOut());

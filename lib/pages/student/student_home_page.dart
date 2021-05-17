@@ -40,14 +40,6 @@ class _StudentHomePageState extends State<StudentHomePage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Text("Halaman Siswa"),
-                        Text(
-                          "Token : " + state.token,
-                          style: TextStyle(fontSize: 18),
-                        ),
-                        Text(
-                          "Email : ",
-                          style: TextStyle(fontSize: 18),
-                        ),
                         RaisedButton(
                           onPressed: () {
                             _authBloc.add(LoggedOut());
