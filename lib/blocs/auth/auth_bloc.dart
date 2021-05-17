@@ -42,6 +42,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       }
     }
 
+    if (event is GoToMainPage) {
+      yield AuthOnMainPage(bottomNavBarIndex: event.bottomNavBarIndex);
+    }
+
     if (event is LoginProcess) {
       yield AuthLoading();
 
@@ -52,7 +56,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           yield LoginSuccess();
           await authService.setLocalTokenAndRole(login.token, login.data.role);
           print("Role = " + login.data.role);
-          // yield AuthHasToken(token: login.token);
           if (login.data.role == "student") {
             yield AuthStudentHasToken(token: login.token);
           } else if (login.data.role == "teacher") {
@@ -80,7 +83,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     if (event is LoggedOut) {
       final String token = await authService.hasToken();
-      // print(token);
 
       try {
         final LogoutModel logout = await authService.logoutStudent(token);

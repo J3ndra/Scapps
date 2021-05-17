@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
-import 'package:scapps_student/pages/login/welcome_login.dart';
+import 'package:scapps_student/pages/wrapper.dart';
 // import 'package:scapps_student/utils/navigator_helper.dart';
 import 'package:scapps_student/utils/theme.dart';
 

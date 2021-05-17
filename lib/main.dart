@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scapps_student/blocs/auth/auth_bloc.dart';
 import 'package:scapps_student/pages/login/login_page.dart';
-import 'package:scapps_student/pages/login/welcome_login.dart';
+import 'package:scapps_student/pages/wrapper.dart';
 import 'package:scapps_student/pages/splash/splash_page.dart';
 import 'package:scapps_student/pages/student/home/student_home_page.dart';
 import 'package:scapps_student/pages/teacher/home/teacher_home_page.dart';

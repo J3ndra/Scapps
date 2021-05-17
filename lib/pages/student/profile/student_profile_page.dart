@@ -8,16 +8,16 @@ import 'package:scapps_student/services/auth_service.dart';
 import 'package:scapps_student/utils/theme.dart';
 import 'package:scapps_student/widgets/primary_button.dart';
 
-class StudentHomePage extends StatefulWidget {
+class StudentProfilePage extends StatefulWidget {
   final AuthBloc authBloc;
 
-  StudentHomePage({Key key, this.authBloc}) : super(key: key);
+  StudentProfilePage({Key key, this.authBloc}) : super(key: key);
 
   @override
-  _StudentHomePageState createState() => _StudentHomePageState();
+  _StudentProfilePageState createState() => _StudentProfilePageState();
 }
 
-class _StudentHomePageState extends State<StudentHomePage> {
+class _StudentProfilePageState extends State<StudentProfilePage> {
   final AuthService authService = AuthService();
   AuthBloc get _authBloc => widget.authBloc;
 
@@ -38,7 +38,13 @@ class _StudentHomePageState extends State<StudentHomePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        Text("Halaman Siswa Home"),
+                        Text("Halaman Siswa Profile"),
+                        RaisedButton(
+                          onPressed: () {
+                            _authBloc.add(LoggedOut());
+                          },
+                          child: Text("Logout"),
+                        )
                       ],
                     ),
                   ),
