@@ -18,13 +18,13 @@ class GetToken extends AuthEvent {
   List<Object> get props => [token];
 }
 
-class GoToMainPage extends AuthEvent {
-  final int bottomNavBarIndex;
+class GetStudentUserProfile extends AuthEvent {
+  final String token;
 
-  GoToMainPage({this.bottomNavBarIndex});
+  GetStudentUserProfile(this.token);
 
   @override
-  List<Object> get props => [bottomNavBarIndex];
+  List<Object> get props => [token];
 }
 
 class AuthIsExpired extends AuthEvent {}

@@ -42,8 +42,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       }
     }
 
-    if (event is GoToMainPage) {
-      yield AuthOnMainPage(bottomNavBarIndex: event.bottomNavBarIndex);
+    if (event is GetStudentUserProfile) {
+      yield AuthLoading();
+
+      print(event.token);
+      final user = await authService.getStudentProfile(event.token);
+      print(user.data.email);
+      yield StudentProfile(email: user.data.email, name: user.data.name);
     }
 
     if (event is LoginProcess) {

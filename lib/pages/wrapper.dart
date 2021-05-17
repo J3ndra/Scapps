@@ -4,7 +4,6 @@ import 'package:scapps_student/blocs/auth/auth_bloc.dart';
 import 'package:scapps_student/blocs/auth/auth_event.dart';
 import 'package:scapps_student/blocs/auth/auth_state.dart';
 import 'package:scapps_student/pages/login/login_page.dart';
-import 'package:scapps_student/pages/student/home/student_home_page.dart';
 import 'package:scapps_student/pages/student/student_main_page.dart';
 import 'package:scapps_student/pages/teacher/home/teacher_home_page.dart';
 import 'package:scapps_student/services/auth_service.dart';
@@ -53,9 +52,9 @@ class WelcomeLoginPage extends StatelessWidget {
               ),
             );
           }
-          if (state is AuthStudentHasToken || state is AuthOnMainPage)
+          if (state is AuthStudentHasToken || state is StudentProfile)
             return StudentMainPage(authBloc: authBloc);
-          if (state is AuthTeacherHasToken || state is GoToMainPage)
+          if (state is AuthTeacherHasToken)
             return TeacherHomePage(authBloc: authBloc);
           if (state is AuthExpired) return LoginPage(authBloc: authBloc);
           if (state is AuthFailed || state is LoginFailed)

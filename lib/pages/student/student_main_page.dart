@@ -35,9 +35,7 @@ class _StudentMainPageState extends State<StudentMainPage> {
       body: Stack(children: [
         PageView(
           controller: pageController,
-          onPageChanged: (index) {
-            bottomNavBarIndex = index;
-          },
+          onPageChanged: onPageChanged,
           children: [
             StudentHomePage(authBloc: _authBloc),
             StudentProfilePage(authBloc: _authBloc)
@@ -68,5 +66,11 @@ class _StudentMainPageState extends State<StudentMainPage> {
         ],
       ),
     );
+  }
+
+  void onPageChanged(int index) {
+    setState(() {
+      this.bottomNavBarIndex = index;
+    });
   }
 }

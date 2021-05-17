@@ -27,13 +27,14 @@ class AuthTeacherHasToken extends AuthState {
   List<Object> get props => [token];
 }
 
-class AuthOnMainPage extends AuthState {
-  final int bottomNavBarIndex;
+class StudentProfile extends AuthState {
+  final String name;
+  final String email;
 
-  AuthOnMainPage({this.bottomNavBarIndex});
+  StudentProfile({this.name, this.email});
 
   @override
-  List<Object> get props => [bottomNavBarIndex];
+  List<Object> get props => [name, email];
 }
 
 class AuthRoleNotFound extends AuthState {}

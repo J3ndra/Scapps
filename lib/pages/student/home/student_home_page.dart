@@ -31,18 +31,27 @@ class _StudentHomePageState extends State<StudentHomePage> {
           // ignore: missing_return
           builder: (context, state) {
             if (state is AuthStudentHasToken) {
-              return WillPopScope(
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Text("Halaman Siswa Home"),
-                      ],
+              _authBloc.add(GetStudentUserProfile(state.token));
+              return Container();
+            }
+            if (state is StudentProfile) {
+              return Container(
+                width: MediaQuery.of(context).size.width,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      "Nama : " + state.name,
+                      style: TextStyle(fontSize: 18),
                     ),
-                  ),
-                  onWillPop: onWillPop);
+                    Text(
+                      "Email : " + state.email,
+                      style: TextStyle(fontSize: 18),
+                    )
+                  ],
+                ),
+              );
             }
           }),
     );

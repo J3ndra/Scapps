@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:scapps_student/models/login_model.dart';
 import 'package:scapps_student/models/logout_model.dart';
+import 'package:scapps_student/models/student_user_model.dart';
+import 'package:scapps_student/models/teacher_user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 String baseUrl = 'https://scapp-dev.koding.co.id';
@@ -34,6 +36,41 @@ class AuthService {
 
       var responseBody = json.decode(response.body);
       return LogoutModel.fromJson(responseBody);
+    } catch (e) {
+      return e;
+    }
+  }
+
+  // Get Student User Profile
+  Future getStudentProfile(String token) async {
+    final url = '$baseUrl/api/v1/mobile/profile/detail';
+
+    try {
+      var response = await http.get(Uri.parse(url), headers: {
+        'Authorization': 'Bearer $token',
+        'Accept': 'application/json'
+      });
+
+      var responseBody = json.decode(response.body);
+      print("Get student profile success");
+      return StudentUserModel.fromJson(responseBody);
+    } catch (e) {
+      return e;
+    }
+  }
+
+  // Get Teacher User Profile
+  Future getTeacherProfile(String token) async {
+    final url = '$baseUrl/api/v1/mobile/profile/detail';
+
+    try {
+      var response = await http.get(Uri.parse(url), headers: {
+        'Authorization': 'Bearer $token',
+        'Accept': 'application/json'
+      });
+
+      var responseBody = json.decode(response.body);
+      return TeacherUserModel.fromJson(responseBody);
     } catch (e) {
       return e;
     }
