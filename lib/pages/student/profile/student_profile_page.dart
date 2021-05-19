@@ -35,27 +35,30 @@ class _StudentProfilePageState extends State<StudentProfilePage> {
               return Container();
             }
             if (state is StudentProfile) {
-              return Container(
-                width: MediaQuery.of(context).size.width,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      "Nama : " + state.name,
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    Text(
-                      "Email : " + state.email,
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    RaisedButton(
-                      onPressed: () {
-                        _authBloc.add(LoggedOut());
-                      },
-                      child: Text("Logout"),
-                    )
-                  ],
+              return Scaffold(
+                backgroundColor: Colors.red,
+                body: Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        "Nama : " + state.name,
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      Text(
+                        "Email : " + state.email,
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      RaisedButton(
+                        onPressed: () {
+                          _authBloc.add(LoggedOut());
+                        },
+                        child: Text("Logout"),
+                      )
+                    ],
+                  ),
                 ),
               );
             }

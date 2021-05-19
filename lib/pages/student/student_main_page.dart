@@ -29,9 +29,7 @@ class _StudentMainPageState extends State<StudentMainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('testNavBar'),
-      ),
+      backgroundColor: Colors.white,
       body: Stack(children: [
         PageView(
           controller: pageController,
@@ -43,6 +41,7 @@ class _StudentMainPageState extends State<StudentMainPage> {
         ),
       ]),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.white,
         currentIndex: bottomNavBarIndex,
         onTap: (index) {
           setState(() {
@@ -51,7 +50,15 @@ class _StudentMainPageState extends State<StudentMainPage> {
           });
         },
         selectedItemColor: Colors.black,
-        selectedLabelStyle: TextStyle(color: Colors.black),
+        selectedLabelStyle: TextStyle(
+            fontWeight: FontWeight.normal,
+            fontFamily: 'Nunito',
+            color: Colors.black),
+        unselectedItemColor: Color(0xFFA6A6A6),
+        unselectedLabelStyle: TextStyle(
+            fontWeight: FontWeight.normal,
+            fontFamily: 'Nunito',
+            color: Color(0xFFA6A6A6)),
         items: [
           BottomNavigationBarItem(
               icon: Icon(
@@ -60,7 +67,7 @@ class _StudentMainPageState extends State<StudentMainPage> {
               label: 'Home'),
           BottomNavigationBarItem(
               icon: Icon(
-                Icons.message,
+                Icons.person,
               ),
               label: 'Profile'),
         ],

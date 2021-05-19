@@ -35,21 +35,24 @@ class _StudentHomePageState extends State<StudentHomePage> {
               return Container();
             }
             if (state is StudentProfile) {
-              return Container(
-                width: MediaQuery.of(context).size.width,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      "Nama : " + state.name,
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    Text(
-                      "Email : " + state.email,
-                      style: TextStyle(fontSize: 18),
-                    )
-                  ],
+              return Scaffold(
+                backgroundColor: Colors.white,
+                body: Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        "Nama : " + state.name,
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      Text(
+                        "Email : " + state.email,
+                        style: TextStyle(fontSize: 18),
+                      )
+                    ],
+                  ),
                 ),
               );
             }

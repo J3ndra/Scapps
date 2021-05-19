@@ -19,9 +19,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
       final hasToken = await authService.hasToken();
       final hasRole = await authService.hasRole();
+      print("Do Auth Check");
       if (hasToken != null) {
         final bool tokenExpired = JwtDecoder.isExpired(hasToken);
-        print("Token = " + hasToken + "\n Role = " + hasRole);
+        print('Auth check token is expired?' + tokenExpired.toString());
         if (tokenExpired != false) {
           await authService.unsetAll();
           yield AuthExpired();
@@ -44,11 +45,21 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     if (event is GetStudentUserProfile) {
       yield AuthLoading();
+      print('Do GetStudentUserProfile');
+      try {
+        final bool tokenExpired = JwtDecoder.isExpired(event.token);
+        print("GetStudentUserProfile token expired?" + tokenExpired.toString());
 
-      print(event.token);
-      final user = await authService.getStudentProfile(event.token);
-      print(user.data.email);
-      yield StudentProfile(email: user.data.email, name: user.data.name);
+        if (tokenExpired != false) {
+          await authService.unsetAll();
+          yield AuthExpired();
+        } else {
+          print('Token is not expired');
+          final user = await authService.getStudentProfile(event.token);
+          print("Success GetStudentUserProfile");
+          yield StudentProfile(email: user.data.email, name: user.data.name);
+        }
+      } catch (e) {}
     }
 
     if (event is LoginProcess) {
