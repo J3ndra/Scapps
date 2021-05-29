@@ -1,4 +1,7 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:scapps_student/blocs/auth/auth_bloc.dart';
 import 'package:scapps_student/pages/student/home/student_home_page.dart';
 import 'package:scapps_student/pages/student/profile/student_profile_page.dart';
@@ -6,8 +9,14 @@ import 'package:scapps_student/pages/student/profile/student_profile_page.dart';
 class StudentMainPage extends StatefulWidget {
   final int bottomNavBarIndex;
   final AuthBloc authBloc;
+  final FirebaseAnalytics analytics;
+  final FirebaseAnalyticsObserver observer;
 
-  StudentMainPage({this.bottomNavBarIndex = 0, this.authBloc});
+  StudentMainPage(
+      {this.bottomNavBarIndex = 0,
+      this.authBloc,
+      this.analytics,
+      this.observer});
 
   @override
   _StudentMainPageState createState() => _StudentMainPageState();
@@ -24,10 +33,13 @@ class _StudentMainPageState extends State<StudentMainPage> {
 
     bottomNavBarIndex = widget.bottomNavBarIndex;
     pageController = PageController(initialPage: bottomNavBarIndex);
+    _sendSuccessLoginToFirebase();
   }
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(children: [
@@ -79,5 +91,9 @@ class _StudentMainPageState extends State<StudentMainPage> {
     setState(() {
       this.bottomNavBarIndex = index;
     });
+  }
+
+  Future<void> _sendSuccessLoginToFirebase() async {
+    await widget.analytics.logEvent(name: 'login_success', parameters: null);
   }
 }

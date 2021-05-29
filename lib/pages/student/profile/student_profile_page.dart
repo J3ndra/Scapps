@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:scapps_student/blocs/auth/auth_bloc.dart';
@@ -6,6 +7,7 @@ import 'package:scapps_student/blocs/auth/auth_event.dart';
 import 'package:scapps_student/blocs/auth/auth_state.dart';
 import 'package:scapps_student/services/auth_service.dart';
 import 'package:scapps_student/utils/theme.dart';
+import 'package:scapps_student/widgets/photo_profile.dart';
 import 'package:scapps_student/widgets/primary_button.dart';
 
 class StudentProfilePage extends StatefulWidget {
@@ -25,6 +27,12 @@ class _StudentProfilePageState extends State<StudentProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarIconBrightness: Brightness.light,
+        statusBarBrightness: Brightness.dark,
+        statusBarColor: Colors.transparent,
+        systemNavigationBarColor: Colors.white,
+        systemNavigationBarIconBrightness: Brightness.dark));
     return Scaffold(
       body: BlocBuilder(
           bloc: _authBloc,
@@ -36,31 +44,17 @@ class _StudentProfilePageState extends State<StudentProfilePage> {
             }
             if (state is StudentProfile) {
               return Scaffold(
-                backgroundColor: Colors.red,
-                body: Container(
-                  width: MediaQuery.of(context).size.width,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        "Nama : " + state.name,
-                        style: TextStyle(fontSize: 18),
+                  body: WillPopScope(
+                      child: SingleChildScrollView(
+                        child: Column(children: [
+                          PhotoProfile(
+                            image: state.image,
+                            name: state.name,
+                            nisn: state.nisn,
+                          )
+                        ]),
                       ),
-                      Text(
-                        "Email : " + state.email,
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      RaisedButton(
-                        onPressed: () {
-                          _authBloc.add(LoggedOut());
-                        },
-                        child: Text("Logout"),
-                      )
-                    ],
-                  ),
-                ),
-              );
+                      onWillPop: onWillPop));
             }
           }),
     );

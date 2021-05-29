@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "881533075580",
+    "project_id": "scapps-3db99",
+    "storage_bucket": "scapps-3db99.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:881533075580:android:7c2753fa9afd5315d809f9",
+        "android_client_info": {
+          "package_name": "com.example.scapps_student"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "881533075580-ck70j1vgntuov1q5jcvjr85or3fcesrn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnKrUku343ug2FMTf0Lhfsialgg8Xp888"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "881533075580-ck70j1vgntuov1q5jcvjr85or3fcesrn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

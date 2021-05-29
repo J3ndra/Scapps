@@ -1,3 +1,5 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scapps_student/blocs/auth/auth_bloc.dart';
@@ -39,6 +41,10 @@ class WelcomeLoginPage extends StatelessWidget {
   WelcomeLoginPage({Key key, this.authService, this.authBloc})
       : super(key: key);
 
+  static FirebaseAnalytics analytics = FirebaseAnalytics();
+  static FirebaseAnalyticsObserver observer =
+      FirebaseAnalyticsObserver(analytics: analytics);
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder(
@@ -53,12 +59,14 @@ class WelcomeLoginPage extends StatelessWidget {
             );
           }
           if (state is AuthStudentHasToken || state is StudentProfile)
-            return StudentMainPage(authBloc: authBloc);
+            return StudentMainPage(
+                authBloc: authBloc, analytics: analytics, observer: observer);
           if (state is AuthTeacherHasToken)
             return TeacherHomePage(authBloc: authBloc);
           if (state is AuthExpired) return LoginPage(authBloc: authBloc);
           if (state is AuthFailed || state is LoginFailed)
-            return LoginPage(authBloc: authBloc);
+            return LoginPage(
+                authBloc: authBloc, analytics: analytics, observer: observer);
           if (state is AuthLoading)
             return Container(
               color: Colors.white,

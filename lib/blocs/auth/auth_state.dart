@@ -30,8 +30,10 @@ class AuthTeacherHasToken extends AuthState {
 class StudentProfile extends AuthState {
   final String name;
   final String email;
+  final String nisn;
+  final String image;
 
-  StudentProfile({this.name, this.email});
+  StudentProfile({this.name, this.email, this.nisn, this.image});
 
   @override
   List<Object> get props => [name, email];

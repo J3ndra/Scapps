@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 import 'package:scapps_student/pages/wrapper.dart';
@@ -23,6 +24,12 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarIconBrightness: Brightness.dark,
+        statusBarBrightness: Brightness.light,
+        statusBarColor: Colors.white,
+        systemNavigationBarColor: Colors.white,
+        systemNavigationBarIconBrightness: Brightness.dark));
     return Scaffold(
       body: Stack(
         fit: StackFit.expand,
@@ -42,7 +49,6 @@ class _SplashPageState extends State<SplashPage> {
                       Container(
                         width: 150,
                         height: 150,
-                        // child: Image.asset("assets/images/logo.svg"),
                         child: SvgPicture.asset("assets/images/logo.svg"),
                       ),
                       Padding(padding: EdgeInsets.only(top: 30.0)),

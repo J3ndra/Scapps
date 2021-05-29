@@ -1,5 +1,8 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:scapps_student/blocs/auth/auth_bloc.dart';
@@ -11,8 +14,11 @@ import 'package:scapps_student/widgets/primary_button.dart';
 // ignore: must_be_immutable
 class LoginForm extends StatelessWidget {
   final AuthBloc authBloc;
+  final FirebaseAnalytics analytics;
+  final FirebaseAnalyticsObserver observer;
 
-  LoginForm({Key key, this.authBloc}) : super(key: key);
+  LoginForm({Key key, this.authBloc, this.analytics, this.observer})
+      : super(key: key);
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -22,6 +28,12 @@ class LoginForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarIconBrightness: Brightness.dark,
+        statusBarBrightness: Brightness.light,
+        statusBarColor: Colors.white,
+        systemNavigationBarColor: Colors.white,
+        systemNavigationBarIconBrightness: Brightness.dark));
     return BlocBuilder(
       bloc: authBloc,
       builder: (context, state) {
@@ -194,11 +206,7 @@ class LoginForm extends StatelessWidget {
     );
   }
 
-  void _loginAttempt() {
-    // print("Email = " +
-    //     emailController.text +
-    //     "\nPassword = " +
-    //     passwordController.text);
+  Future<void> _loginAttempt() async {
     authBloc.add(LoginProcess(
         email: emailController.text, password: passwordController.text));
   }

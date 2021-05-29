@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,11 +24,14 @@ var routes = <String, WidgetBuilder>{
 //     home: SplashPage(),
 //     routes: routes));
 
-void main() {
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarIconBrightness: Brightness.dark,
-      statusBarBrightness: Brightness.light,
-      statusBarColor: Colors.white));
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
+  // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+  //     statusBarIconBrightness: Brightness.dark,
+  //     statusBarBrightness: Brightness.light,
+  //     statusBarColor: Colors.white));
   final AuthService authService = AuthService();
   runApp(MaterialApp(
     title: "Asep's",

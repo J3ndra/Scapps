@@ -57,7 +57,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           print('Token is not expired');
           final user = await authService.getStudentProfile(event.token);
           print("Success GetStudentUserProfile");
-          yield StudentProfile(email: user.data.email, name: user.data.name);
+          yield StudentProfile(
+              email: user.data.email,
+              name: user.data.name,
+              nisn: user.data.student.nisn,
+              image: user.data.student.image);
         }
       } catch (e) {}
     }
